@@ -33,4 +33,3 @@ resultImage = cv2.drawMatchesKnn(queryImage, kp1, trainingImage, kp2, matches, N
 
 plt.imshow(resultImage)
 plt.show()
-
