@@ -24,7 +24,7 @@ matchesMask = [[0, 0] for i in range(len(matches))]
 
 # David G. Lowe's ratio test, populate the mask
 for i, (m, n) in enumerate(matches):
-	if m.distance < 0.7 * n.distance:
+	if m.distance < 0.69 * n.distance:
 		matchesMask[i] = [1, 0]
 
 drawParams = dict(matchColor = (0, 255, 0), singlePointColor = (255, 0, 0), matchesMask = matchesMask, flags = 0)
