@@ -11,6 +11,14 @@ sift = cv2.xfeatures2d.SIFT_create()
 kp1, des1 = sift.detectAndCompute(img1, None)
 kp2, des2 = sift.detectAndCompute(img2, None)
 
+# surf = cv2.xfeatures2d.SURF_create(500)
+# kp1, des1 = surf.detectAndCompute(img1, None)
+# kp2, des2 = surf.detectAndCompute(img2, None)
+
+# orb = cv2.ORB_create()
+# kp1, des1 = orb.detectAndCompute(img1, None)
+# kp2, des2 = orb.detectAndCompute(img2, None)
+
 FLANN_INDEX_KETREE = 0
 index_params = dict(algorithm = FLANN_INDEX_KETREE, trees = 5)
 search_params = dict(checks = 50)

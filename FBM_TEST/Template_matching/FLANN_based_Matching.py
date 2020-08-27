@@ -10,6 +10,14 @@ sift = cv2.xfeatures2d.SIFT_create()
 kp1, des1 = sift.detectAndCompute(queryImage, None)
 kp2, des2 = sift.detectAndCompute(trainingImage, None)
 
+# # create ORB and detect/compute
+# orb = cv2.ORB_create()
+# kp1, des1 = orb.detectAndCompute(queryImage, None)
+# kp2, des2 = orb.detectAndCompute(trainingImage, None)
+
+# des1 = np.float32(des1)
+# des2 = np.float32(des2)
+
 # FLANN matcher parameters
 FLANN_INDEX_KDTREE = 0
 indexParams = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
