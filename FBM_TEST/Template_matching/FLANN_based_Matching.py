@@ -2,8 +2,8 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-queryImage = cv2.imread('Template_target/chessboard_template.jpg', 0)
-trainingImage = cv2.imread('Template_target/chessboard_target.png', 0)
+queryImage = cv2.imread('redbing_zip.png', 0)
+trainingImage = cv2.imread('pieces_zip.jpeg', 0)
 
 # create SIFT and detect/compute
 sift = cv2.xfeatures2d.SIFT_create()
@@ -21,7 +21,7 @@ kp2, des2 = sift.detectAndCompute(trainingImage, None)
 # FLANN matcher parameters
 FLANN_INDEX_KDTREE = 0
 indexParams = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
-searchParams = dict(checks = 50) # or pass empty dictionary
+searchParams = dict(checks = 100) # or pass empty dictionary
 
 flann = cv2.FlannBasedMatcher(indexParams, searchParams)
 

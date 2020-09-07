@@ -2,9 +2,9 @@
 import cv2
 import numpy
 #读取目标图片
-target = cv2.imread("multi_target.jpg")
+target = cv2.imread("pieces_zip.jpeg")
 #读取模板图片
-template = cv2.imread("template.jpg")
+template = cv2.imread("redbing_zip.png")
 #获得模板图片的高宽尺寸
 theight, twidth = template.shape[:2]
 #执行模板匹配，采用的匹配方式cv2.TM_SQDIFF_NORMED
