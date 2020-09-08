@@ -26,6 +26,8 @@ for i in range(8):
     bow_kmeans_trainer.add(extract_sift(path(neg, i)))
 
 voc = bow_kmeans_trainer.cluster()
+print(type(voc), voc.shape)
+
 extract_bow.setVocabulary(voc)
 
 def bow_features(fn):
@@ -60,7 +62,7 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 if car_predict[1][0][0] == 1.0:
     cv2.putText(car_img, 'Car Detected', (10, 30), font, 1, (0, 255, 0), 2, cv2.LINE_AA)
 
-if not_car_predict[1][0][0] == 1.0:
+if not_car_predict[1][0][0] == -1.0:
     cv2.putText(notcar_img, 'Car Not Detected', (10, 30), font, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
 cv2.imshow('BOW + SVM Success', car_img)
