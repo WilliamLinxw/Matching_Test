@@ -13,7 +13,7 @@ class BOW(object):
         '''
         用于获取图片的全路径 
         '''
-        return '%s/%s%d.jpg'%(train_path, cls, i + 1)
+        return '%s/%s/%s.%d.jpg'%(self.train_path,cls,cls,i+1)
 
     def fit(self,train_path,k):
         '''
@@ -32,8 +32,8 @@ class BOW(object):
         #创建BOW训练器，指定k-means参数k   把处理好的特征数据全部合并，利用聚类把特征词分为若干类，此若干类的数目由自己设定，每一类相当于一个视觉词汇
         bow_kmeans_trainer = cv2.BOWKMeansTrainer(k)
         
-        pos = 'pos-'
-        neg = 'neg-'
+        pos = 'dog'
+        neg = 'cat'
         
         #指定用于提取词汇字典的样本数
         length = 10
@@ -56,7 +56,7 @@ class BOW(object):
         #创建两个数组，分别对应训练数据和标签，并用BOWImgDescriptorExtractor产生的描述符填充
         #按照下面的方法生成相应的正负样本图片的标签 1：正匹配  -1：负匹配
         traindata,trainlabels = [],[]
-        for i in range(20):   #这里取200张图像做训练
+        for i in range(400):   #这里取200张图像做训练
             traindata.extend(self.bow_descriptor_extractor(self.path(pos,i)))
             trainlabels.append(1)
             traindata.extend(self.bow_descriptor_extractor(self.path(neg,i)))
@@ -104,41 +104,35 @@ class BOW(object):
 
 
 if __name__ == '__main__':
-    # #测试样本数量，测试结果
-    # test_samples = 100
-    # test_results = np.zeros(test_samples,dtype=np.bool)
+    #测试样本数量，测试结果
+    test_samples = 100
+    test_results = np.zeros(test_samples,dtype=np.bool)
     
     #训练集图片路径  狗和猫两类  进行训练
-    train_path = '/media/caesarlin/DATA/Cars_Images/cars_train'
+    train_path = '/media/caesarlin/DATA/Cats_Dogs_Images'
     bow = BOW()
     bow.fit(train_path,40)
     
     
-    # #指定测试图像路径
-    # for index in range(test_samples):
-    #     dog = './data/cat_and_dog/data/train/dog/dog.{0}.jpg'.format(index)
-    #     dog_img = cv2.imread(dog)    
+    #指定测试图像路径
+    for index in range(test_samples):
+        dog = '/media/caesarlin/DATA/Cats_Dogs_Images/dog/dog.{0}.jpg'.format(index)
+        dog_img = cv2.imread(dog)    
     
-    #     #预测
-    #     dog_predict = bow.predict(dog)    
-    #     test_results[index] = dog_predict
-
-    car, notcar = '/media/caesarlin/DATA/Cars_Images/Car.jpg', '/media/caesarlin/DATA/Cars_Images/Soccer.jpg'
-    car_img = cv2.imread(car)
-    notcar_img = cv2.imread(notcar)
+        #预测
+        dog_predict = bow.predict(dog)    
+        test_results[index] = dog_predict
         
-    car_predict = bow.predict(car)
-    not_car_predict = bow.predict(notcar)
+    #计算准确率
+    accuracy = np.mean(test_results.astype(dtype=np.float32)) 
+    print('测试准确率为：',accuracy)
         
-    font = cv2.FONT_HERSHEY_SIMPLEX
-
-    if car_predict == True:
-        cv2.putText(car_img, 'Car Detected', (10, 30), font, 1, (0, 255, 0), 2, cv2.LINE_AA)
-
-    if not_car_predict == False:
-        cv2.putText(notcar_img, 'Car Not Detected', (10, 30), font, 1, (0, 0, 255), 2, cv2.LINE_AA)
-
-    cv2.imshow('BOW + SVM Success', car_img)
-    cv2.imshow('BOW + SVM Failure', notcar_img)
+    #可视化最后一个   
+    font = cv2.FONT_HERSHEY_SIMPLEX    
+    if test_results[0]:
+        cv2.putText(dog_img,'Dog Detected',(10,30),font,1,(0,255,0),2,cv2.LINE_AA)
+        
+    cv2.imshow('dog_img',dog_img)
+    
     cv2.waitKey(0)
     cv2.destroyAllWindows()
